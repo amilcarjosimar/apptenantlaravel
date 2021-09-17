@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <h3 class="page-title">@lang('global.tenants.title')</h3>
     {!! Form::open(['method' => 'POST', 'route' => ['admin.tenants.store']]) !!}
@@ -9,50 +8,78 @@
             @lang('global.app_create')
         </div>
         <div class="panel-body">
-            <div class="row" style="padding:10px;">
-                <div  style="border:1px solid #000;padding:10px;background-color:#d4edda;margin-bottom:10px;border-radius:5px">Propiedad principal:
+
+
+
+               <div class="row" style="padding:10px;">
+                    <div  style="border:1px solid #000;padding:10px;background-color:#d4edda;margin-bottom:10px;border-radius:5px">Propiedad principal:
                         <h3><b>{{$property->propiedad->name}}</b></h3>
-                </div>
-                <div  style="border:1px solid #000;padding:10px;background-color:#d4edda;margin-bottom:10px;border-radius:5px">Unidad:
+                    </div>
+                    <div  style="border:1px solid #000;padding:10px;background-color:#d4edda;margin-bottom:10px;border-radius:5px">Unidad:
                         <h3><b>{{$property->nombre}}</b></h3>
-                </div>
-                <div  style="border:1px solid #000;padding:10px;background-color:#e66a6a;margin-bottom:10px;border-radius:5px;color:#fff">Valor arrendamiento:
-                    <h3><b>${{number_format($property->renta), 0, ',', '.'}}</b></h3>
+                    </div>
+                    <div  style="border:1px solid #000;padding:10px;background-color:#e66a6a;margin-bottom:10px;border-radius:5px;color:#fff">Valor arrendamiento:
+                    <h3><b>${{$property->renta}}</b></h3>
+                    </div>
                 </div>
                     <input type="hidden" name="property_id" value="<?=$property->propiedad->id;?>" id="property_id">
                     <input type="hidden" name="property_sub_id" value="<?=$property->id;?>" id="property_sub_id">
-            </div>
-            <div class="row">
-                <div class="col-xs-3 form-group">
-                    {!! Form::label('fecha_inicio_contrato', trans('global.tenants.fields.fecha_inicio_contrato').'*', ['class' => 'control-label']) !!}
-                        {!! Form::date('fecha_inicio_contrato', old('fecha_inicio_contrato'), ['class' => 'form-control', 'placeholder' => 'Fecha inicio', 'required ' => '']) !!}
+                  
+
+                 <div class="row">
+                                                                 
+                   <!-- <div class="col-xs-3 form-group">-->
+                       <!-- <label class="control-label" style="color:#000">Fecha inicio contrato
+                        </label>  -->                      
+                         <div class="col-xs-3 form-group">
+                        {!! Form::label('fecha_inicio_contrato', trans('global.tenants.fields.fecha_inicio_contrato').'*', ['class' => 'control-label']) !!}
+                                        {!! Form::date('fecha_inicio_contrato', old('fecha_inicio_contrato'), ['class' => 'form-control', 'placeholder' => 'Fecha inicio', 'required ' => '']) !!}
                                         <p class="help-block"></p>
+                                        <!--  <button class="btn btn-danger" onclick="duracionmeses()">Calcular</button>
+                                        -->
                                         @if($errors->has('fecha_inicio_contrato'))
                                             <p class="help-block">
                                                 {{ $errors->first('fecha_inicio_contrato') }}
                                             </p>
                                         @endif
-                </div>
-                <div class="col-xs-4 form-group">
-                    <label class="control-label" style="color:#888da8">Duración del contrato (meses)
-                    </label> 
-                    <input type="number" id="duracion_meses1" value="" placeholder="En meses" name="duracion_meses" onChange="AddMes()" required >
-                        <!-- bd-->
+                        </div>
+                        <!--    <input id="fecha_inicio_contrato1" type="date" value=""
+                            onblur="">
+                    </div>-->
+                        <div class="col-xs-3 form-group">
+                        <label class="control-label" style="color:#888da8">Duración del contrato (meses)
+                        </label> 
+                            <input style="width:100px;"class="form-control" type="number" id="duracion_meses1" value="" placeholder="En meses" name="duracion_meses" onChange="AddMes()" required >
+
+                           <!-- bd-->
                            <input type="hidden" id="duracion_meses" name="duracion_meses" placeholder="">
-                        <!-- bd-->
+
+                           <!--js-->
+                           <input type="hidden" id="duracion_meses2" name="duracion_meses2" placeholder="">
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        <label class="control-label" style="color:#000">
+                            <!--Contrato hasta-->
+                        </label> 
+                            <input type="hidden" id="fecha_fin_contrato" placeholder="Contrato hasta" name="fecha_fin_contrato">
+                    </div>
+                    
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6 form-group">
-                    <label class="control-label" style="color:#000">
-                            Contrato hasta(fecha calculada)
-                    </label> 
-                    <input type="text" id="fecha_fin_contrato" placeholder="Contrato hasta" name="fecha_fin_contrato">
-                    {!! Form::label('¿Detalles en la duración del contrato?', '¿Detalles en la duración del contrato?', ['class' => 'control-label']) !!}
+
+               
+               
+                     <div class="col-xs-6 form-group">
+                        {!! Form::label('¿Detalles en la duración del contrato?', '¿Detalles en la duración del contrato?', ['class' => 'control-label']) !!}
                             {!! Form::text('duracion_contrato', old('duracion_contrato'), ['class' => 'form-control', 'placeholder' => '¿Detalles en la duración del contrato?', 'required' => '']) !!}
+                            <p class="help-block"></p>
+                                @if($errors->has('duracion_contrato'))
+                                <p class="help-block">
+                                {{ $errors->first('duracion_contrato') }}
+                                </p>
+                                @endif
+                    </div>
                 </div>
-            </div>
-            <div class="row">
+
                 <div class="panel panel-default" style="padding:20px;padding-bottom:0px;">
                     <div class="panel-heading" style="font-size:18px;font-weight:700;background-color:#d1ecf1;color:#0c5460;border:2px solid #bee5eb;">
                             Inquilino
@@ -108,8 +135,9 @@
                                     </p>
                                 @endif
                             </div>
-                        </div>
+                            
                     </div>
+                </div>
                 <div class="panel panel-default" style="padding:20px;padding-bottom:0px;">
                     <div class="panel-heading" style="font-size:18px;font-weight:700;background-color:#f8d7da;color:#721c24;border:2px solid #f5c6cb;">
                             Codeudor
@@ -185,20 +213,57 @@
     {!! Form::close() !!}
     </div>
 
+  
+
+
+<script src="{{url('plugins/jQuery/jQuery-2.1.4.min.js')}}"></script>
+<script src="{{url('bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{url('plugins/fastclick/fastclick.js')}}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+<script src="{{url('datePicker/js/bootstrap-datepicker.js')}}"></script>
+<!-- Languaje -->
+<script src="{{url('datePicker/locales/bootstrap-datepicker.es.min.js')}}"></script>
+<script>
+ $('.datepicker').datepicker({
+        format: "yyyy-mm-dd",
+        language: "es",
+        autoclose: true
+    });
+</script>
 
 <script>
-function AddMes(){
-var obj= document.getElementById('fecha_inicio_contrato');
+var obj=   document.getElementById('fecha_inicio_contrato');
 var obj2 = document.getElementById('duracion_meses1');
+var obj3 = document.getElementById('fecha_fin_contrato');
+obj.value = setFormato(new Date());
+
+function sumar(){
+var obj=document.getElementById('fecha_inicio_contrato');
+var obj2 = document.getElementById('duracion_meses1');
+var obj3 = document.getElementById('fecha_fin_contrato');
+obj.value = setFormato(new Date());
+}
+
+function AddMes(){
 var fecha = new Date(obj.value);
 fecha.setMonth( fecha.getMonth() + +(obj2.value));
-var day = ("0" +fecha.getDate()).slice(-2);
-var month = ("0" + (fecha.getMonth() + 1)).slice(-2);
-var date = fecha.getFullYear()+"-"+(month)+"-"+(day);
+obj3.value = setFormato(fecha);
 var numero_meses=document.getElementById('duracion_meses1').value;
 document.getElementById('duracion_meses').value=numero_meses;
-document.getElementById('fecha_fin_contrato').value=date;
 }
+
+function setFormato(fecha){
+    var day = ("0" + fecha.getDate()).slice(-2);
+    var month = ("0" + (fecha.getMonth() + 1)).slice(-2);
+    //var date = (day)+"-"+(month)+"-"+(day)+"-"+fecha.getFullYear();
+    //var date = (day)+"/"+(month)+"/"+fecha.getFullYear();
+    var date = fecha.getFullYear()+"-"+(month)+"-"+(day);
+    return date;
+}
+
 </script>
 
 

@@ -14,8 +14,8 @@
 <!-- Tell the browser to be responsive to screen width -->
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Favicons -->
- <!-- <link href="{{url('landing/assets/img/favicon.png')}}" rel="icon">
-  <link href="{{url('landing/assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">-->
+ <link href="{{url('landing/assets/img/favicon.png')}}" rel="icon">
+ <link href="{{url('landing/assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0N21RP8DQ7"></script>
 <script>
