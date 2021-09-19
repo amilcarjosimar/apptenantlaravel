@@ -5,7 +5,7 @@ use Maatwebsite\Excel\Concerns\Exportable;
 
 //Route::get('/', function () { return redirect('/admin/home'); });
 //Route::get('/', function () { return redirect('/admin/properties'); });
-Route::get('/', function () { return redirect('/welcome'); });
+Route::get('/', function () { return redirect('welcome'); });
 
 // Landing Routes...
 $this->get('welcome', 'LandingController@welcome')->name('landing.index');
