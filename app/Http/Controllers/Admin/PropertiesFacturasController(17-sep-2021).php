@@ -69,11 +69,6 @@ class PropertiesFacturasController extends Controller
         return view('admin.properties_facturas.index', compact('facturas','property'));
     }
 
-      /**
-     * Display a listing Invoices Properties.
-     *
-     * @return \Illuminate\Http\Response
-     */
         public function facturas_propiedad_consulta($id)
     {
         
@@ -85,7 +80,8 @@ class PropertiesFacturasController extends Controller
             if (! Gate::allows('properties_facturas_delete')) {
                 return abort(401);
             }
-            $facturas = PropertiesFacturas::where('id_property',$id)->where('deleted_at','!=',NULL)->get();
+            //$facturas = PropertiesFacturas::where('id_property_sub',$id)::onlyTrashed()->get();
+            $facturas = PropertiesFacturas::where('id_property',$id)->where('deleted_at',NULL)->onlyTrashed()->get();
             $property=Property::findOrFail($id);
             //$tenant='';
         } else {
@@ -317,7 +313,7 @@ class PropertiesFacturasController extends Controller
             return abort(401);
         }
 
-        $properties = \App\Property::get()->pluck('name','id');
+        $properties = \App\Property::get()->pluck('name', 'id');
         $document   = PropertiesFacturas::findOrFail($id);
 
         return view('admin.properties_facturas.edit', compact('document', 'properties'));

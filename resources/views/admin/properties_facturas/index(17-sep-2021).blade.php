@@ -18,7 +18,7 @@
 
             <li><a href="{{ route('admin.properties_facturas.facturas_propiedad_consulta',[$property->id]) }}" style="{{ request('show_deleted') == 1 ? '' : 'font-weight: 700' }}">@lang('global.app_all')</a></li> |
               <li><a href="{{ route('admin.properties_facturas.facturas_vencidas_propiedad_consulta',[$property->id]) }}" style="{{ request('show_deleted') == 1 ? 'font-weight: 700' : '' }}">Por pagar</a></li> |
-            <li><a href="{{ route('admin.properties_facturas.facturas_propiedad_consulta',[$property->id]) }}?show_deleted=1" style="{{ request('show_deleted') == 1 ? 'font-weight: 700' : '' }}">@lang('global.app_trash')</a></li>
+           <!-- <li><a href="{{ route('admin.properties.index') }}?show_deleted=1" style="{{ request('show_deleted') == 1 ? 'font-weight: 700' : '' }}">@lang('global.app_trash')</a></li>-->
 
         </ul>
     </p>
