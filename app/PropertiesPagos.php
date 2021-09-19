@@ -7,7 +7,7 @@ use App\Property;
 use App\PropertiesFacturas;
 
 /**
- * Class Role
+ * Class PropertiesPagos
  *
  * @package App
  * @property string $estado
@@ -23,7 +23,7 @@ class PropertiesPagos extends Model
 
     public function factura()
       {       
-        return $this->belongsTo('App\PropertiesFacturas', 'id_factura', 'id');    
+        return $this->hasOne('App\PropertiesFacturas', 'id', 'id_factura')->where('deleted_at',NULL);    
       }
 
     public function propiedad()
@@ -40,12 +40,5 @@ class PropertiesPagos extends Model
       {       
         return $this->belongsTo('App\User', 'id_tenant', 'id');    
       }
-    
-    
-    
-    /*public function permission()
-    {
-        return $this->belongsToMany(Permission::class, 'permission_role');
-    }*/
     
 }

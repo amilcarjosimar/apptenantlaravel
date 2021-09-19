@@ -56,7 +56,9 @@
                                 @endcan-->
 
                                  <td field-key='pago'>COLH-FT-{{ $pago->id_factura or '' }}<br/>
-                                
+                                  <!--  Inicio: {{date('d/F/Y', strtotime($pago->factura->fecha_inicio)) or ''}}<br/>
+                                    Vencimiento: {{date('d/F/Y', strtotime($pago->factura->fecha_corte)) or ''}}<br/>-->
+                                    Valor factura: ${{number_format($pago->factura->valor_neto) or ''}}
 
                                  </td>
                                 <td field-key='property'>{{ $pago->propiedad->name or '' }}</td>
