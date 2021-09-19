@@ -32,25 +32,22 @@
               
 
         <div class="panel-body table-responsive">
-            <table class="display table table-hover {{ count($facturas) > 0 ? 'datatable' : '' }} @can('properties_facturas_delete') @if ( request('show_deleted') != 1 ) display @endif @endcan"  cellspacing="0" width="100%"> <!--style="table-layout:collapse">-->
+            <table class="table table-bordered table-striped {{ count($facturas) > 0 ? 'datatable' : '' }} @can('properties_facturas_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
                 <thead>
                     <tr>
-                        <!--@can('properties_facturas_delete')
+                        @can('properties_facturas_delete')
                             @if ( request('show_deleted') != 1 )
                             <th style="text-align:center;">
                                 <input type="checkbox" id="select-all" />
                             </th>@endif
-                        @endcan-->
+                        @endcan
 
                         <th># Factura</th>
                         <th>@lang('global.facturas.fields.unidad')</th>
                         <th style="text-align:center;width:10px">@lang('global.facturas.fields.tenant')</th>
-                       <!-- <th style="text-align:center;">Período</th>-->
-                        <!--<th style="text-align:center;">Fecha Corte</th>-->
                         <th>@lang('global.facturas.fields.valor_neto')</th>
                         <th>Valor Pagado</th>
                         <th>Saldo</th>
-                     <!--   <th>Seguro</th>-->
                         <th>Estado</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
@@ -64,9 +61,9 @@
                     @if (count($facturas) > 0)
                         @foreach ($facturas as $factura)
                             <tr data-entry-id="{{ $factura->id }}">
-                                <!--@can('properties_facturas_delete')
+                               @can('properties_facturas_delete')
                                     @if ( request('show_deleted') != 1 )<td style="width:5px"></td>@endif
-                                @endcan-->
+                                @endcan
 
                                  <td field-key='factura' style="width:310px;font-size:15px">COLH-FT-{{ $factura->id or '' }}<br/>
                                  Inicio: {{date('d/F/Y', strtotime($factura->fecha_inicio))}} <br/>
@@ -78,7 +75,7 @@
                                 </div>
 
                              
-                                @if($factura->saldo_factura($factura->id) > 0)
+                              
                                 @if(($factura->fecha_corte) <= Now())
                                  <span class="label label-danger" style="text-align:center;padding:10px;font-size:15px">Vencida
                                  </span>
@@ -97,7 +94,7 @@
                                         </a>
                                     </span>
                                 @endif
-                                @endif
+                              
                            
 
                                </td>
@@ -115,23 +112,7 @@
                                         </span>
                                    
                                 </td>
-                          <!--      <td field-key='fecha_inicio'>
-                                Inicio: {{date('d/F/Y', strtotime($factura->fecha_inicio))}} <br/>
-                                Corte: {{date('d/F/Y', strtotime($factura->fecha_corte))}}
-
-                               @if (($factura->valor_neto)-($factura->pago2($factura->id))!=0)
-                                @if(($factura->fecha_corte) <= Now())
-                                 <span class="label label-danger" style="text-align:center;padding:10px;font-size:15px">Vencida
-                                 </span>
-                                 @else 
-                                   <span class="label label-success" style="text-align:center;padding:10px;font-size:15px">Sin vencer
-                                 </span>
-                                @endif
-                                @endif
-
-
-                                </td>-->
-                                <!--<td field-key='fecha_corte'>{{date('d/F/Y', strtotime($factura->fecha_corte))}}</td>-->
+                     
                                 
                                
                                 <td field-key='name' style="font-size:15px;font-weight: 700">${{ number_format($factura->valor_neto), 0, ',', '.' }}</td>
@@ -144,13 +125,7 @@
                                     
 
 
-                                      @if($factura->saldo_factura($factura->id) == 0)
-                                      <span class="label label-warning" style="text-align:center;padding:10px;font-size:12px">
-    <a target="_blank" href="{{route('admin.properties_pagos.show',[$factura->id_pago_valor($factura->id)])}}" data-toggle="tooltip" title="Ver Pago" style="color:#fff;padding:0px">
-                                            Ver pago
-                                        </a>
-                                    </span>
-                                    @endif
+                                  
                                 </td>
 
 <!--Saldo-->
@@ -171,27 +146,7 @@
 
                                  </td>
 <!--Saldo-->
-<!--comision-->
-                       <!--           <td field-key='name' style="font-size:15px;font-weight: 700">
-                                   ${{ number_format($factura->comision), 0, ',', '.' }}
-       
-                                   <a href="">
-                                    <span class="m-status" style="background:#5cb85c;color:#fff;float:left;">
-                                    Asegurado
-                                    </span>
-                                    </a> 
-  
-
-                                   <a href="">
-                                    <span class="m-status" style="background:#d25948;color:#fff;float:left;">
-                                    No Asegurado
-                                    </span>
-                                    </a>
-   
-
-
-                                </td>-->
-<!--comision-->                                  
+                      
 
 
                                 <td field-key='estado'>
@@ -253,13 +208,9 @@
                                 @endif
                             </tr>
                         @endforeach
-                    @else
+                     @else
                         <tr>
-                            
-                              <div class="alert alert-success" style="color:#008d4c">{{session('flash','Esta propiedad no tiene facturas vencidas')}}</div>
-                            <td colspan="9">
-                            @lang('global.app_no_entries_in_table')
-                            </td>
+                            <td colspan="8">@lang('global.app_no_entries_in_table')</td>
                         </tr>
                     @endif
                 </tbody>

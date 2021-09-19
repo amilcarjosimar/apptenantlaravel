@@ -85,7 +85,9 @@ class PropertiesFacturasController extends Controller
             if (! Gate::allows('properties_facturas_delete')) {
                 return abort(401);
             }
-        $facturas = PropertiesFacturas::onlyTrashed()->get()->where('id_property',$id)->get();
+        //$facturas = PropertiesFacturas::onlyTrashed()->get();
+        $facturas = PropertiesFacturas::onlyTrashed()->get();
+        //$facturas = PropertiesFacturas::all();
         $property=Property::findOrFail($id);
             //$tenant='';
         } else {
@@ -427,9 +429,13 @@ class PropertiesFacturasController extends Controller
         }
 
         $document = PropertiesFacturas::onlyTrashed()->findOrFail($id);
+        $id_property= $document->id_property;
+        $property=Property::findOrFail($id_property);
         $document->restore();
+        $facturas = PropertiesFacturas::where('id_property',$id_property)->where('deleted_at',NULL)->get();
+             
 
-        return redirect()->route('admin.properties_facturas.index');
+        return view('admin.properties_facturas.index', compact('property','facturas'));
     }
 
     /**
@@ -445,9 +451,14 @@ class PropertiesFacturasController extends Controller
         }
 
         $document = PropertiesFacturas::onlyTrashed()->findOrFail($id);
+        $id_property= $document->id_property;
+        $property=Property::findOrFail($id_property);     
         $document->forceDelete();
+        $facturas = PropertiesFacturas::where('id_property',$id_property)->where('deleted_at',NULL)->get();
 
-        return redirect()->route('admin.properties_facturas.index');
+        //return redirect()->route('admin.properties_facturas.index');
+        return view('admin.properties_facturas.index', compact('property','facturas'));
+        //return view('admin.properties_facturas.show', compact('factura','facturas'));
     }
 
     //Generar PDF
