@@ -85,11 +85,11 @@ class PropertiesFacturasController extends Controller
             if (! Gate::allows('properties_facturas_delete')) {
                 return abort(401);
             }
-            $facturas = PropertiesFacturas::where('id_property',$id)->where('deleted_at','!=',NULL)->get();
-            $property=Property::findOrFail($id);
+        $facturas = PropertiesFacturas::onlyTrashed()->get()->where('id_property',$id)->get();
+        $property=Property::findOrFail($id);
             //$tenant='';
         } else {
-            $facturas = PropertiesFacturas::where('id_property',$id)->where('deleted_at',NULL)->get();
+        $facturas = PropertiesFacturas::where('id_property',$id)->where('deleted_at',NULL)->get();
             $property=Property::findOrFail($id);
             //$tenant='';
         }
